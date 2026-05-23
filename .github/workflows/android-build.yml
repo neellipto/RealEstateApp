@@ -1,0 +1,38 @@
+name: Build Xamarin Android app
+
+on:
+  push:
+    branches: ["master", "prepare-mobile-build"]
+  pull_request:
+    branches: ["master"]
+  workflow_dispatch:
+
+jobs:
+  build-android:
+    name: Build Android APK
+    runs-on: windows-2019
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v2
+
+      - name: Restore NuGet packages
+        run: nuget restore RealEstateApp.sln
+
+      - name: Build Android project
+        shell: pwsh
+        run: |
+          $msbuild = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe"
+          & $msbuild "RealEstateApp\RealEstateApp.Android\RealEstateApp.Android.csproj" /t:Restore,Build /p:Configuration=Debug /p:Platform=AnyCPU /verbosity:minimal
+
+      - name: Upload Android build output
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-debug-build
+          path: |
+            RealEstateApp/RealEstateApp.Android/bin/Debug/**/*.apk
+            RealEstateApp/RealEstateApp.Android/bin/Debug/**/*.aab
+          if-no-files-found: warn
