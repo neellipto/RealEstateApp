@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -87,7 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RealEstateApp\RealEstateApp.csproj">
-      <Project>{E0415E89-4AEE-42C1-9A53-226C41338FD7}</Project>
+      <Project>{FC050D0D-A7AE-498F-A440-13010E326695}</Project>
       <Name>RealEstateApp</Name>
     </ProjectReference>
   </ItemGroup>
