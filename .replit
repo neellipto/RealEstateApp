@@ -1,4 +1,4 @@
-modules = ["dotnet-7.0"]
+modules = ["dotnet-7.0", "php-8.2"]
 [agent]
 expertMode = true
 
