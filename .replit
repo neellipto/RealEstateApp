@@ -4,3 +4,7 @@ expertMode = true
 
 [nix]
 channel = "stable-25_05"
+
+[deployment]
+deploymentTarget = "autoscale"
+run = ["php", "-S", "0.0.0.0:5000", "-t", "erp/", "erp/router.php"]
