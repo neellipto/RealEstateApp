@@ -1013,11 +1013,11 @@ ALTER TABLE `task_comments` ADD CONSTRAINT `fk_tc_task` FOREIGN KEY (`task_id`) 
 ALTER TABLE `landed_cost_items` ADD CONSTRAINT `fk_lci_summary` FOREIGN KEY (`summary_id`) REFERENCES `landed_cost_summary` (`id`);
 
 -- --------------------------------------------------------
--- DEFAULT ADMIN USER (password: Admin@123)
+-- DEFAULT ADMIN USER (password: admin123)
 -- --------------------------------------------------------
 
 INSERT INTO `users` (`employee_id`, `name`, `email`, `phone`, `password_hash`, `role_id`, `department`, `designation`, `is_active`) VALUES
-('EMP001', 'System Admin', 'admin@colorjetbd.com', '+8801000000000', '$2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2uheWG/igi.', 2, 'Management', 'System Administrator', 1),
-('EMP002', 'Owner', 'owner@colorjetbd.com', '+8801000000001', '$2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2uheWG/igi.', 1, 'Management', 'Owner', 1);
+('EMP001', 'admin', 'admin@colorjetbd.com', '+8801000000000', '$2y$12$Czb2CBT0ubAX3BkhXzr/zOdkIwRi2WTvqzB5v0alBCE.D6QFcIxm.', 2, 'Management', 'System Administrator', 1),
+('EMP002', 'Owner', 'owner@colorjetbd.com', '+8801000000001', '$2y$12$Czb2CBT0ubAX3BkhXzr/zOdkIwRi2WTvqzB5v0alBCE.D6QFcIxm.', 1, 'Management', 'Owner', 1);
 
 COMMIT;
