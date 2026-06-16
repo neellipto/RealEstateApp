@@ -14,10 +14,18 @@ function getDB(): PDO {
         else throw new RuntimeException('config.php not found. Please run install.php');
     }
 
-    $dsn = sprintf(
-        'mysql:host=%s;port=%s;dbname=%s;charset=%s',
-        DB_HOST, DB_PORT, DB_NAME, DB_CHARSET
-    );
+    // Use Unix socket if available (faster, no TCP overhead)
+    if (defined('DB_SOCKET') && DB_SOCKET && file_exists(DB_SOCKET)) {
+        $dsn = sprintf(
+            'mysql:unix_socket=%s;dbname=%s;charset=%s',
+            DB_SOCKET, DB_NAME, DB_CHARSET
+        );
+    } else {
+        $dsn = sprintf(
+            'mysql:host=%s;port=%s;dbname=%s;charset=%s',
+            DB_HOST, DB_PORT, DB_NAME, DB_CHARSET
+        );
+    }
     $options = [
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,

@@ -5,8 +5,9 @@
 define('DB_HOST',    'localhost');
 define('DB_PORT',    '3306');
 define('DB_NAME',    'colorjet_erp');
-define('DB_USER',    'runner');
+define('DB_USER',    'root');
 define('DB_PASS',    '');
+define('DB_SOCKET',  '/tmp/mysql.sock');
 define('DB_CHARSET', 'utf8mb4');
 
 define('APP_NAME',     'COLORJET ERP');

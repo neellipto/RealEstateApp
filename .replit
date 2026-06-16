@@ -4,7 +4,7 @@ expertMode = true
 
 [deployment]
 deploymentTarget = "autoscale"
-run = ["php", "-S", "0.0.0.0:5000", "-t", "erp/", "erp/router.php"]
+run = ["bash", "start.sh"]
 
 [nix]
 channel = "stable-25_05"
@@ -25,13 +25,13 @@ args = "Start application"
 name = "Start application"
 author = "agent"
 
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "php -S 0.0.0.0:5000 -t erp/ erp/router.php"
-waitForPort = 5000
-
 [workflows.workflow.metadata]
 outputType = "webview"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "bash start.sh"
+waitForPort = 5000
 
 [[ports]]
 localPort = 5000
