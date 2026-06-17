@@ -167,12 +167,29 @@ const CJ = {
   },
 
   // Notifications
+  _notifInterval: null,
   async loadNotifications() {
-    const r = await CJ.get('api/index.php?module=notifications');
+    let resp;
+    try {
+      resp = await fetch('api/index.php?module=notifications', {
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+      });
+    } catch (e) {
+      return; // network error — skip silently, keep polling
+    }
+    // Session expired: stop the poller and redirect to login
+    if (resp.status === 401) {
+      clearInterval(CJ._notifInterval);
+      CJ._notifInterval = null;
+      window.location.href = 'login.php';
+      return;
+    }
+    let r;
+    try { r = await resp.json(); } catch (e) { return; }
     const badge = document.getElementById('notif-count');
     const list  = document.getElementById('notif-list');
     if (!r.ok || !r.data) return;
-    if (badge) badge.textContent = r.data.unread;
+    if (badge) badge.textContent = r.data.unread > 0 ? r.data.unread : '';
     if (list && r.data.items) {
       list.innerHTML = r.data.items.length
         ? r.data.items.map(n => `<a class="dropdown-item py-2 ${n.is_read?'':'fw-bold'}" href="#">
@@ -237,10 +254,10 @@ const CJ = {
     this.initActiveNav();
     this.initNumberInputs();
     this.initAgreementCalc();
-    // Load notifications periodically
+    // Load notifications periodically (only on authenticated pages)
     if (document.getElementById('notif-count')) {
       this.loadNotifications();
-      setInterval(() => this.loadNotifications(), 60000);
+      CJ._notifInterval = setInterval(() => this.loadNotifications(), 60000);
     }
     // Initialize tooltips
     document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
